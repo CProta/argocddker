@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: numas-be-php-dev
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      volumes:
+          - name: kaniko-secret
+            secret:
+              secretName: dockercred
+              items:
+              - key: .dockerconfigjson
+                path: config.json
+      containers:
+      - name: kaniko
+        image: gcr.io/kaniko-project/executor:latest
+        args: ["--dockerfile=Dockerfile",
+               "--context=git://github.com/CProta/argocddker.git",
+               "--destination=cprota/kanikodker-image:1.0",
+               "--insecure", "--insecure-pull", "--skip-tls-verify", "--skip-tls-verify-pull"]
+        volumeMounts:
+        - name: kaniko-secret
+          mountPath: "/kaniko/.docker"
+      restartPolicy: Never
