@@ -18,7 +18,7 @@ spec:
         image: gcr.io/kaniko-project/executor:latest
         args: ["--dockerfile=Dockerfile",
                "--context=git://github.com/CProta/argocddker.git",
-               "--destination=cprota/kanikodker-image:1.0",
+               "--destination=cprota/kanikodker-image:2.0",
                "--insecure", "--insecure-pull", "--skip-tls-verify", "--skip-tls-verify-pull"]
         volumeMounts:
         - name: kaniko-secret
